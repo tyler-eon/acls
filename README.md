@@ -1,5 +1,7 @@
 # automatic code loading system (acls)
 
+[![Build Status](https://semaphoreci.com/api/v1/projects/80ef69fb-3dd1-499f-9e1c-acfa08d0a7d4/638892/badge.svg)](https://semaphoreci.com/kolorahl/acls)
+
 ## What is it?
 
 The Automatic Code Loading System (ACLS) is a Ruby library intended to help
