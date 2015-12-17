@@ -15,17 +15,19 @@ RSpec::Matchers.define :setup_autoloading_for do |modules|
   end
 
   match do |actual|
-    begin
-      verify(modules)
-    rescue
-      false
-    end
+    verify(modules, false)
   end
 
-  def verify(modules)
+  failure_message do |actual|
+    verify(modules, true)
+  end
+
+  def verify(modules, with_message)
     modules.each do |name|
-      Object.const_get(name).works? or raise "Incorrect module loaded"
+      Object.const_get(name).works? or raise NameError.new("incorrect module loaded #{name}")
     end
+  rescue NameError => e
+    with_message ? e.message : false
   end
 end
 
