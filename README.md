@@ -84,3 +84,15 @@ Options available:
 - `immediate`: Must be a collection of strings and/or regexps. Follows the same
   conditional pattern as `exclude`, but on a match this will immediate load the
   file via `load` instead of deferring it using `autoload`.
+
+## Feature List
+
+### Core
+
+- [X] Generate `autoload` statements based on a set of directory paths.
+
+### Options/Configuration
+
+- [X] Implement `root_ns`.
+- [ ] Implement `exclude`.
+- [ ] Implement `immediate`.
