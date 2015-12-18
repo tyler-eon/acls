@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.homepage = 'https://github.com/kolorahl/acls'
   s.license = 'MIT'
 
-  s.add_runtime_dependency('activesupport', '~> 4.2.5')
+  s.add_runtime_dependency('activesupport', '~> 4.2', '>= 4.2.5')
 
-  s.add_development_dependency('rspec', '~> 3.4.0')
+  s.add_development_dependency('rspec', '~> 3.4', '>= 3.4.0')
 end
