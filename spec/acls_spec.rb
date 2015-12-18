@@ -33,7 +33,7 @@ end
 
 RSpec.describe ACLS::Loader do
   context '#auto' do
-    def lib_modules
+    def lib_base_modules
       %w(One Two Sub::Three Sub::Four FIVE Six SevenEight Sub::CamelCase::NineTen)
     end
 
@@ -50,7 +50,7 @@ RSpec.describe ACLS::Loader do
     end
 
     context 'without a root namespace' do
-      it { expect_autoloading_for("lib", {}, lib_modules) }
+      it { expect_autoloading_for("lib/base", {}, lib_base_modules) }
     end
 
     context 'with an implicit root namespace' do
