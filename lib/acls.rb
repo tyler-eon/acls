@@ -61,15 +61,32 @@ module ACLS
       end
 
       def guess_classname(file, name)
-        if matches = File.read(file).scan(/(class|module)\s+([^\n\r<]+)/)
-          matches.each do |data|
-            potential = data[1].split("::").last
-            if potential.downcase.index(name.downcase)
-              return potential
-            end
-          end
+        process_classname_matches( scan_classnames(file), name )
+      end
+
+      def scan_classnames(file)
+        File.read(file).scan(/(class|module)\s+([^\n\r<]+)/)
+      end
+
+      def process_classname_matches(matches, name)
+        if match = best_classname_match(matches, name)
+          base_classname(match[1])
+        else
+          name
         end
-        name
+      end
+
+      def best_classname_match(matches, name)
+        return nil unless matches
+        matches.drop_while { |match| !match_classname(match[1], name) }.first
+      end
+
+      def match_classname(match, name)
+        base_classname(match).downcase == name.downcase
+      end
+
+      def base_classname(name)
+        name.split("::").last
       end
     end
   end
