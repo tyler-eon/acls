@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name = 'ACLS'
+  s.name = 'acls'
   s.summary = 'ACLS - Automatic Code Loading System'
   s.description = 'ACLS is a library for autoloading Ruby source files in one or more directory trees.'
   s.version = '0.0.1'
