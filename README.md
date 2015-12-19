@@ -90,6 +90,8 @@ Options available:
 ### Core
 
 - [X] Generate `autoload` statements based on a set of directory paths.
+- [ ] Generate static autoload file to be used for quicker application startup
+  in production deployments.
 
 ### Options/Configuration
 
