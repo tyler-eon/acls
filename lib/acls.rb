@@ -40,7 +40,7 @@ module ACLS
         Dir.entries(path).each do |entry|
           next if entry[0] == '.'
           full_path = "#{path}/#{entry}"
-          name = entry.sub(".rb", "").camelize
+          name = entry.sub(".rb", "").strip.camelize
           if File.directory?(full_path)
             sub_mod = mod.submodule(name)
             autoload_magic(sub_mod, full_path, opts)
@@ -86,7 +86,7 @@ module ACLS
       end
 
       def base_classname(name)
-        name.split("::").last
+        name.split("::").last.strip
       end
     end
   end
