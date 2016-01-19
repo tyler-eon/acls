@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    ACLS (0.0.1)
-      activesupport (~> 4.2.5)
+    acls (1.0.1)
+      activesupport (~> 4.2, >= 4.2.5)
 
 GEM
   remote: http://rubygems.org/
@@ -38,8 +38,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ACLS!
-  rspec (~> 3.4.0)
+  acls!
+  rspec (~> 3.4, >= 3.4.0)
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
