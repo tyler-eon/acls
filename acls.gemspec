@@ -6,7 +6,8 @@ Gem::Specification.new do |s|
   s.date = '2015-12-18'
   s.authors = ['Kolo Rahl']
   s.email = 'kolorahl@gmail.com'
-  s.files = ['LICENSE', 'README.md', 'lib/acls.rb', 'lib/module.rb']
+  s.files = ['LICENSE', 'README.md', 'lib/acls.rb',
+             'lib/acls/loader.rb', 'lib/acls/parser.rb', 'lib/acls/tree.rb']
   s.homepage = 'https://github.com/kolorahl/acls'
   s.license = 'MIT'
 

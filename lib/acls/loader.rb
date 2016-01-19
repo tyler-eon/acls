@@ -4,7 +4,11 @@ module ACLS
       # Use one or more paths to autoload a set of Ruby source files.
       def auto(paths, opts={})
         trees = build_trees(paths, opts)
-        autoload_magic(trees, opts)
+        autoload_magic(trees, default_opts.merge(opts))
+      end
+
+      def default_opts
+        {root_ns: false, exclude: [], immediate: []}
       end
 
       private
@@ -45,11 +49,13 @@ module ACLS
       end
 
       def autoload_tree(mod, tree, opts)
-        if tree.source
-          mod.module_eval(autoload_statement(tree))
-        else
-          sub = submodule(mod, tree.name)
-          tree.children.map { |child| autoload_tree(sub, child, opts) }
+        unless exclude?(mod, tree, opts)
+          if tree.source
+            mod.module_eval(autoload_statement(tree))
+          else
+            sub = submodule(mod, tree.name)
+            tree.children.map { |child| autoload_tree(sub, child, opts) }
+          end
         end
       end
 
@@ -57,6 +63,17 @@ module ACLS
         parent.const_get(child, false)
       rescue NameError
         parent.const_set(child, Module.new)
+      end
+
+      def exclude?(mod, tree, opts)
+        opts[:exclude].each do |pattern|
+          if pattern.is_a?(String)
+            return true if pattern == tree.name
+          else
+            return true if pattern.match(tree.name)
+          end
+        end
+        false
       end
 
     end

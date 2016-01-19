@@ -43,6 +43,33 @@ RSpec::Matchers.define :setup_autoloading_for do |modules|
   end
 end
 
+RSpec::Matchers.define :fail_autoloading_for do |modules|
+  description do
+    "does not setup autoloading"
+  end
+
+  match do |actual|
+    verify(modules, false)
+  end
+
+  failure_message do |actual|
+    verify(modules, true)
+  end
+
+  def verify(modules, with_message)
+    modules.each do |name|
+      begin
+        Object.const_get(name).works?
+        raise "Should not have loaded #{name}"
+      rescue NameError
+        # Good
+      end
+    end
+  rescue => e
+    with_message ? e.message : false
+  end
+end
+
 RSpec.describe ACLS::Loader do
   context '#auto' do
     def lib_base_modules
@@ -63,6 +90,12 @@ RSpec.describe ACLS::Loader do
       end
     end
 
+    def expect_failure_for(path, opts, modules, failures)
+      with_modules(modules) do
+        expect(autoload_path(path, opts)).to fail_autoloading_for(failures)
+      end
+    end
+
     context 'without a root namespace' do
       it { expect_autoloading_for("lib/base", {}, lib_base_modules) }
     end
@@ -73,6 +106,13 @@ RSpec.describe ACLS::Loader do
 
     context 'with a custom root namespace' do
       it { expect_autoloading_for("lib/foo", {root_ns: "Bar"}, lib_foo_modules) }
+    end
+
+    context 'with exclusions' do
+      it { expect_failure_for("lib/base",
+                              {exclude: [/^Sub/, "Two"]},
+                              lib_base_modules,
+                              %w(Two Sub::Three Sub::Four Sub::CamelCase::NineTen)) }
     end
   end
 end

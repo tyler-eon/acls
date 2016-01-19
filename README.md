@@ -96,5 +96,5 @@ Options available:
 ### Options/Configuration
 
 - [X] Implement `root_ns`.
-- [ ] Implement `exclude`.
+- [X] Implement `exclude`.
 - [ ] Implement `immediate`.
