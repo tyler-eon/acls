@@ -9,6 +9,18 @@ def autoload_path(path, opts)
   ACLS::Loader.auto(spec_path(path), opts)
 end
 
+def with_modules(modules)
+  yield
+  mods = modules.map { |mod| mod.split('::').first }.sort.uniq
+  mods.each do |mod|
+    begin
+      Object.send(:remove_const, mod)
+    rescue NameError
+      # This is ok
+    end
+  end
+end
+
 RSpec::Matchers.define :setup_autoloading_for do |modules|
   description do
     "setup autoloading"
@@ -46,7 +58,9 @@ RSpec.describe ACLS::Loader do
     end
 
     def expect_autoloading_for(path, opts, modules)
-      expect(autoload_path(path, opts)).to setup_autoloading_for(modules)
+      with_modules(modules) do
+        expect(autoload_path(path, opts)).to setup_autoloading_for(modules)
+      end
     end
 
     context 'without a root namespace' do
