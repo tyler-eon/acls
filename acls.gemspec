@@ -2,8 +2,8 @@ Gem::Specification.new do |s|
   s.name = 'acls'
   s.summary = 'ACLS - Automatic Code Loading System'
   s.description = 'ACLS is a library for autoloading Ruby source files in one or more directory trees.'
-  s.version = '1.1.0'
-  s.date = '2015-12-18'
+  s.version = '1.1.1'
+  s.date = '2016-01-19'
   s.authors = ['Kolo Rahl']
   s.email = 'kolorahl@gmail.com'
   s.files = ['LICENSE', 'README.md', 'lib/acls.rb',
