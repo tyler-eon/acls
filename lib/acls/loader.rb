@@ -3,8 +3,9 @@ module ACLS
     class << self
       # Use one or more paths to autoload a set of Ruby source files.
       def auto(paths, opts={})
+        opts = default_opts.merge(opts)
         trees = build_trees(paths, opts)
-        autoload_magic(trees, default_opts.merge(opts))
+        autoload_magic(trees, opts)
       end
 
       def default_opts
