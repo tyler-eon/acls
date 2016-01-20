@@ -110,7 +110,7 @@ RSpec.describe ACLS::Loader do
 
     context 'with exclusions' do
       it { expect_failure_for("lib/base",
-                              {exclude: [/^Sub/, "Two"]},
+                              {exclude: [/\/sub\//, "two"]},
                               lib_base_modules,
                               %w(Two Sub::Three Sub::Four Sub::CamelCase::NineTen)) }
     end

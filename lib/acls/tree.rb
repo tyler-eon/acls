@@ -16,6 +16,10 @@ module ACLS
       child
     end
 
+    def path
+      @source || @directory
+    end
+
     def to_s
       "name: #{@name}, source: #{@source}, directory: #{@directory}, parent: #{@parent}, children: #{@children.length}"
     end

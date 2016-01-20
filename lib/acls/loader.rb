@@ -68,9 +68,9 @@ module ACLS
       def exclude?(mod, tree, opts)
         opts[:exclude].each do |pattern|
           if pattern.is_a?(String)
-            return true if pattern == tree.name
+            return true if pattern == File.basename(tree.path, ".rb")
           else
-            return true if pattern.match(tree.name)
+            return true if pattern.match(tree.path)
           end
         end
         false

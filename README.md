@@ -78,12 +78,27 @@ Options available:
   values, the root directory is not a namespace and everything falls under the
   `Object` namespace.
 - `exclude`: Must be a collection of strings and/or regexps. For each string in
-  the collection, files are excluded from autoloading if they match the string
+  the collection, files are excluded from autoloading if they match the _name_
   exactly. For each regexp in the collection, files are excluded from
-  autoloading if the path results in a successful match on the regexp.
+  autoloading if the _path_ results in a successful match on the regexp.
 - `immediate`: Must be a collection of strings and/or regexps. Follows the same
   conditional pattern as `exclude`, but on a match this will immediate load the
   file via `load` instead of deferring it using `autoload`.
+
+### Path vs Name
+
+When talking about matching, there are two attributes: _names_ and _paths_.
+
+A _name_ is the base file or directory name, without the Ruby file extension (if
+it has one). e.g. `lib/foobar.rb` would have a _name_ of `foobar`.
+
+A _path_ is the full path to a file or directory. e.g. `lib/foobar.rb`,
+`lib/sub/directory`.
+
+Strings tend to match against names, because names are shorter and strings are
+meant for simple matching. Regexps tend to match against paths because a path
+contains more information and regexps allow you to have more detailed control
+over the matching conditions.
 
 ## Feature List
 
