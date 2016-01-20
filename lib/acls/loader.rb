@@ -30,13 +30,13 @@ module ACLS
       end
 
       def autoload_root(tree, opts)
-          root = Object
-          if opts[:root_ns].is_a?(TrueClass)
-            root = submodule(root, File.basename(tree.directory).camelize)
-          elsif opts[:root_ns].is_a?(String)
-            opts[:root_ns].split('::').each { |ns| root = submodule(root, ns) }
-          end
-          root
+        root = Object
+        if opts[:root_ns].is_a?(TrueClass)
+          root = submodule(root, File.basename(tree.directory).camelize)
+        elsif opts[:root_ns].is_a?(String)
+          opts[:root_ns].split('::').each { |ns| root = submodule(root, ns) }
+        end
+        root
       end
 
       def autoload_trees(trees, opts)
