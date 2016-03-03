@@ -29,7 +29,9 @@ module ACLS
       end
 
       def scan_classnames(file)
-        File.read(file).scan(/(class|module)\s+([^\n\r<]+)/)
+        contents = File.read(file)
+        contents.scrub! if (contents.respond_to?(:scrub!))
+        contents.scan(/(class|module)\s+([^\n\r<]+)/)
       end
 
       def process_classname_matches(matches, name)
