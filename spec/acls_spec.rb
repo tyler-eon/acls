@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'acls'
 
 def spec_path(dir)
-  "#{Dir.pwd}/spec/#{dir}"
+  File.expand_path("../#{dir}", __FILE__)
 end
 
 def autoload_path(path, opts)
@@ -45,7 +45,7 @@ end
 
 RSpec::Matchers.define :fail_autoloading_for do |modules|
   description do
-    "does not setup autoloading"
+    "not setup autoloading"
   end
 
   match do |actual|
@@ -72,16 +72,16 @@ end
 
 RSpec.describe ACLS::Loader do
   context '#auto' do
+    def lib_single_modules
+      %w(Single::One Single::Two)
+    end
+
     def lib_base_modules
       %w(One Two Sub::Three Sub::Four FIVE Six SevenEight Sub::CamelCase::NineTen)
     end
 
-    def lib_root_modules
-      %w(Root::One Root::Two Root::Sub::Three Root::Sub::Four Root::Sub::Five Root::Sub::Six)
-    end
-
-    def lib_foo_modules
-      %w(Bar::One Bar::Two Bar::Sub::Three Bar::Sub::Four Bar::Sub::Five Bar::Sub::Six)
+    def lib_nested_modules
+      %w(Bar::One Bar::Two Bar::Sub::Three Bar::Sub::Four::Five Bar::Sub::Four)
     end
 
     def expect_autoloading_for(path, opts, modules)
@@ -96,16 +96,16 @@ RSpec.describe ACLS::Loader do
       end
     end
 
-    context 'without a root namespace' do
+    context 'for single-level directories' do
+      it { expect_autoloading_for("lib/single", {}, lib_single_modules) }
+    end
+
+    context 'with multiple directory levels' do
       it { expect_autoloading_for("lib/base", {}, lib_base_modules) }
-    end
 
-    context 'with an implicit root namespace' do
-      it { expect_autoloading_for("lib/root", {root_ns: true}, lib_root_modules) }
-    end
-
-    context 'with a custom root namespace' do
-      it { expect_autoloading_for("lib/foo", {root_ns: "Bar"}, lib_foo_modules) }
+      context 'with nested classes' do
+        it { expect_autoloading_for("lib/nested", {}, lib_nested_modules) }
+      end
     end
 
     context 'with exclusions' do

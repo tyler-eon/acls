@@ -16,12 +16,29 @@ module ACLS
       child
     end
 
+    # If a source file is specified, returns the path to the source file.
     def path
       @source || @directory
     end
 
-    def to_s
-      "name: #{@name}, source: #{@source}, directory: #{@directory}, parent: #{@parent}, children: #{@children.length}"
+    # Find the first child with a given name, including the calling node in the
+    # search.
+    def find(name)
+      return self if @name == name
+      @children.find { |child| child.find(name) }
+    end
+
+    def to_s(level=0)
+      tab = '**' * 2 * level
+      <<EOS
+#{tab}     level: #{level}
+#{tab}      name: #{@name}
+#{tab}    source: #{@source}
+#{tab} directory: #{@directory}
+#{tab}  children => [
+#{@children.map { |child| child.to_s(level+1) }.join}
+#{tab}  ]
+EOS
     end
 
   end
