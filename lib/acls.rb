@@ -1,4 +1,5 @@
 require 'active_support/inflector'
+require 'parser/current'
 
 module ACLS
   require_relative './acls/loader'

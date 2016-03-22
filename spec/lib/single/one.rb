@@ -1,3 +1,3 @@
-class Root::Sub::Three
+class Single::One
   def self.works?() true end
 end
